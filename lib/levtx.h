@@ -114,12 +114,6 @@ int BackupEventLog(	// https://msdn.microsoft.com/en-us/library/aa363635
 	const char *filename	// absolute or relative path to backup file
 	);
 
-// clears (empties) the log after optionally backing it up to filename
-int ClearEventLog(	// https://msdn.microsoft.com/en-us/library/aa363637
-	HANDLE  log,	// same as BackupEventLog
-	const char *filename	// same as BackupEventLog (no backup if NULL)
-	);
-
 
 // log event access
 
