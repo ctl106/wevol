@@ -35,8 +35,8 @@ Champagne Lewis - champagne.t.lewis@gmail.com
 #endif // ELF_LOG_SIGNATURE
 
 // readflags values to OR together and pass to ReadEventLog()
-#define EVENTLOG_SEEK_READ			0b00	// 0x0002 in Win; read from offset
-#define EVENTLOG_SEQUENTIAL_READ	0b01	// 0x0001 in Win; read from either end
+#define EVENTLOG_SEQUENTIAL_READ	0b00	// 0x0001 in Win; read from either end
+#define EVENTLOG_SEEK_READ			0b01	// 0x0002 in Win; read from offset
 #define EVENTLOG_FORWARDS_READ		0b00	// 0x0004 in Win; read forwards IF seq
 #define EVENTLOG_BACKWARDS_READ		0b10	// 0x0008 in Win; read backwards IF seq
 
