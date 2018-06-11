@@ -6,6 +6,7 @@
 
 #include "test_data.h"
 
+
 void evtx_test_suite();
 void test_evtx_header();
 void test_good_evtx_header();
@@ -108,8 +109,6 @@ void test_bad_evtx_record_length()
 	int bad_evtx_record_length_eval = test_build_evtx_record(bad_evtx_length_record);
 	assert(EXIT_FAILURE == bad_evtx_record_length_eval);
 }
-
-
 
 int main()
 {
