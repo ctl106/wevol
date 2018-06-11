@@ -2,16 +2,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "lib/swap_endian.h"
 #include "lib/winlog.h"
 
 #include "test_data.h"
-
-#include "..\wizlib\testlib.h"
-
-
-#define APPLICATION_EVTX	".\test_data\Application.evtx"
-
 
 void evtx_test_suite();
 void test_evtx_header();
