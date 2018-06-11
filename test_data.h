@@ -1,6 +1,6 @@
 /*
-Please pardon the long lines. I automatically generated		
-this test data with a python script.		
+Please pardon the long lines. I automatically generated
+this test data with a python script.
 -Champagne Lewis.
 */
 
