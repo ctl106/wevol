@@ -1,7 +1,14 @@
+#include <inttypes.h>
 #include <stdlib.h>
 #include <string.h>	// do I really need this?
 
 #include "evtx.h"
+
+#ifdef DEBUG
+#define DBG(format, ...)	fprintf(stderr, "%s(): %d: "format, __func__, __LINE__, ## __VA_ARGS__)
+#else
+#define DBG(format, ...)
+#endif // DEBUG
 
 
 #define HEADER_SIZE	4096	// bytes size of header, though not all is used
@@ -43,7 +50,9 @@ int build_evtx_header(const char *log, PEvtxHeader header)
 
 int build_evtx_chunk(const char *addr, PEvtxChunk chunk)
 {
-	memcpy(chunk, addr, sizeof(EvtxChunk));
+	size_t c_size = (uintptr_t)&(chunk->records) - (uintptr_t)chunk;
+	DBG("Chunk size = &(chunk->records) - chunk; need to verify\n");
+	memcpy(chunk, addr, c_size);//sizeof(EvtxChunk));
 	if(memcmp(chunk->magic, evtx_chunk_magic, sizeof(chunk->magic)))
 		return EXIT_FAILURE;
 	else

@@ -6,6 +6,22 @@
 
 #include "test_data.h"
 
+#ifdef DEBUG
+
+#define ASSERT(condition)	if (condition)								\
+								printf("%s() succeeded!\n", __func__);	\
+							else										\
+								assert(condition);
+
+#define DBG(format, ...)	fprintf(stderr, "%s(): %d: "format, __func__, __LINE__, ## __VA_ARGS__)
+
+#else
+
+#define ASSERT(condition)	assert(condition)
+#define DBG(format, ...)
+
+#endif // DEBUG
+
 
 void evtx_test_suite();
 void test_evtx_header();
@@ -39,14 +55,14 @@ void test_evtx_header()
 void test_good_evtx_header()
 {
 	EvtxHeader test_header;
-	assert(EXIT_SUCCESS == build_evtx_header(good_evtx_header, &test_header));
+	ASSERT(EXIT_SUCCESS == build_evtx_header(good_evtx_header, &test_header));
 }
 
 void test_bad_evtx_header()
 {
 	char header_data[sizeof(EvtxHeader)] = {0};
 	EvtxHeader test_header;
-	assert(EXIT_FAILURE == build_evtx_header(header_data, &test_header));
+	ASSERT(EXIT_FAILURE == build_evtx_header(header_data, &test_header));
 }
 
 // evtx chunk tests
@@ -59,14 +75,16 @@ void test_evtx_chunk()
 void test_good_evtx_chunk()
 {
 	EvtxChunk test_chunk;
-	assert(EXIT_SUCCESS == build_evtx_chunk(good_evtx_chunk, &test_chunk));
+DBG("testing\n");	// REMOVE_ME
+	ASSERT(EXIT_SUCCESS == build_evtx_chunk(good_evtx_chunk, &test_chunk));
 }
 
 void test_bad_evtx_chunk()
 {
 	char chunk_data[sizeof(EvtxChunk)] = {0};
 	EvtxChunk test_chunk;
-	assert(EXIT_FAILURE == build_evtx_chunk(chunk_data, &test_chunk));
+DBG("testing\n");	// REMOVE_ME
+	ASSERT(EXIT_FAILURE == build_evtx_chunk(chunk_data, &test_chunk));
 }
 
 // evtx record tests
@@ -95,19 +113,19 @@ int test_build_evtx_record(const char *addr)
 void test_good_evtx_record()
 {
 	int good_evtx_record_eval = test_build_evtx_record(good_evtx_record);
-	assert(EXIT_SUCCESS == good_evtx_record_eval);
+	ASSERT(EXIT_SUCCESS == good_evtx_record_eval);
 }
 
 void test_bad_evtx_record_magic()
 {
 	int bad_evtx_record_magic_eval = test_build_evtx_record(bad_evtx_magic_record);
-	assert(EXIT_FAILURE == bad_evtx_record_magic_eval);
+	ASSERT(EXIT_FAILURE == bad_evtx_record_magic_eval);
 }
 
 void test_bad_evtx_record_length()
 {
 	int bad_evtx_record_length_eval = test_build_evtx_record(bad_evtx_length_record);
-	assert(EXIT_FAILURE == bad_evtx_record_length_eval);
+	ASSERT(EXIT_FAILURE == bad_evtx_record_length_eval);
 }
 
 int main()
