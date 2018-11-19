@@ -12,6 +12,10 @@
 find_package(Check REQUIRED)
 include_directories(${CHECK_INCLUDE_DIRS})
 
+set(TEST_HEADERS
+  check_main.h
+)
+
 set(TEST_SOURCES
   check_evtx.c
   check_evt.c
@@ -19,5 +23,5 @@ set(TEST_SOURCES
   check_main.c
 )
 
-add_executable(check_winlog ${TEST_SOURCES})
-target_link_libraries(check_winlog winlog ${CHECK_LIBRARIES})
+add_executable(check_main ${TEST_HEADERS} ${TEST_SOURCES})
+target_link_libraries(check_main winlog ${CHECK_LIBRARIES})
