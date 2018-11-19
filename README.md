@@ -7,6 +7,11 @@
 
 Wevol is a C program for parsing and sorting through event records in the Windows Event .evtx files.
 
+### Dependancies
+1. CMake - https://cmake.org/ - build system
+2. Check - https://libcheck.github.io/check/ - unit testing framework
+
+
 ### Current State
 
 Currently, I am creating the API and the tests for reading in evtx files.
