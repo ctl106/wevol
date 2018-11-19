@@ -74,7 +74,5 @@ add_subdirectory(tests)
 # Unit tests
 enable_testing()
 
-add_test(NAME check_evtx COMMAND check_evtx)
-add_test(NAME check_evt COMMAND check_evt)
-add_test(NAME check_winlib COMMAND check_winlib)
+add_test(NAME check_main COMMAND check_main)
 

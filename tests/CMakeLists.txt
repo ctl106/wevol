@@ -9,6 +9,7 @@
 # be: C:/Program Files/check
 # set(CHECK_INSTALL_DIR "C:/Program Files/check")
 
+find_package(Threads REQUIRED)
 find_package(Check REQUIRED)
 include_directories(${CHECK_INCLUDE_DIRS})
 
@@ -24,4 +25,4 @@ set(TEST_SOURCES
 )
 
 add_executable(check_main ${TEST_HEADERS} ${TEST_SOURCES})
-target_link_libraries(check_main winlog ${CHECK_LIBRARIES})
+target_link_libraries(check_main winlog ${CHECK_LIBRARIES} ${CMAKE_THREAD_LIBS_INIT})
