@@ -2,7 +2,10 @@
 #define CHECK_MAIN_H_INCLUDED
 
 
+#include <stdlib.h>
+
 #include <check.h>
+
 
 Suite *evtx_suite(void);
 Suite *evt_suite(void);
