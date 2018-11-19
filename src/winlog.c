@@ -3,19 +3,24 @@
 
 // external API method definitions
 
-HANDLE OpenBackupEventLog(const char *servername, const char *filename)
+HANDLE OpenBackupEventLog(LPCSTR lpUNCServerName,	LPCSTR lpFileName)
 {
-		return NULL;
+	return NULL;
 }
 
-int ReadEventLog(
-	const HANDLE log,
-	const int readflags,
-	const size_t offset,
-	void *buf,
-	const size_t buf_size,
-	size_t *bytes_read,
-	size_t *bytes_needed
+BOOL CloseEventLog(HANDLE hEventLog)
+{
+	return 1;
+}
+
+BOOL ReadEventLog(
+	HANDLE hEventLog,
+	WORD dwReadFlags,
+	WORD dwRecordOffset,
+	LPVOID lpBuffer,
+	DWORD nNumberOfBytesToRead,
+	DWORD *pnBytesRead,
+	DWORD *pnMinNumberOfBytesNeeded
 	)
 {
 	/*
