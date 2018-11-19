@@ -5,6 +5,7 @@
 bin/
 obj/
 test_data/
+build/
 
 # Prerequisites
 *.d

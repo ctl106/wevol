@@ -1,26 +1,34 @@
-# commented out bits kept from example for reference
-
 set(LIB_SOURCES
-#  money.c
+  evtx.c
+  evt.c
+  winlog.c
 )
 
 set(MAIN_SOURCES
-#  main.c
+  main.c
 )
 
 set(HEADERS 
   ${CONFIG_HEADER}
-#  money.h
+  evtx.h
+  evt.h
+  winlog.h
 )
 
-#add_library(money STATIC ${LIB_SOURCES} ${HEADERS})
+add_library(winlog STATIC ${LIB_SOURCES} ${HEADERS})
+target_include_directories(winlog INTERFACE ${CMAKE_CURRENT_SOURCE_DIR})
 
 add_executable(main ${HEADERS} ${MAIN_SOURCES})
-target_link_libraries(main money)
+target_link_libraries(main winlog)
 
-#install(TARGETS money
+install(TARGETS winlog
   RUNTIME DESTINATION bin
   LIBRARY DESTINATION lib
   ARCHIVE DESTINATION lib)
 
-#install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/money.h DESTINATION include)
+install(
+  FILES
+    ${CMAKE_CURRENT_SOURCE_DIR}/evtx.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/evt.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/winlog.h
+  DESTINATION include)

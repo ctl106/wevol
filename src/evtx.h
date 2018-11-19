@@ -11,6 +11,7 @@ record:	http://computer.forensikblog.de/en/2007/07/evtx-event-record.html
 #ifndef EVTX_H_INCLUDED
 #define EVTX_H_INCLUDED
 
+#include <stddef.h>	// for size_t
 #include <stdint.h>	// for uint16_t and uint32_t for Win WORD and DWORD types
 
 //#define EVTX_HEADER_MAGIC	"ElfFile\0"	//0x456c6646696c6500	// translates as "ElfFile\0x00"

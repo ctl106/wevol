@@ -1,6 +1,7 @@
 #ifndef WINLOG_H_INCLUDED
 #define WINLOG_H_INCLUDED
 
+#include <stddef.h>	// for size_t
 #include <stdint.h>	// for uint16_t and uint32_t for Win WORD and DWORD types
 
 #include "evtx.h"

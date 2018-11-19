@@ -1,4 +1,4 @@
-project(money C)
+project(wevol C)
 
 cmake_minimum_required(VERSION 2.8 FATAL_ERROR)
 set(CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
@@ -74,6 +74,7 @@ add_subdirectory(tests)
 # Unit tests
 enable_testing()
 
-# keeping as an example temporarily...
-# add_test(NAME check_money COMMAND check_money)
+add_test(NAME check_evtx COMMAND check_evtx)
+add_test(NAME check_evt COMMAND check_evt)
+add_test(NAME check_winlib COMMAND check_winlib)
 
