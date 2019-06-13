@@ -3,7 +3,7 @@
 
 // external API method definitions
 
-HANDLE OpenBackupEventLog(LPCSTR lpUNCServerName,	LPCSTR lpFileName)
+HANDLE OpenBackupEventLog(LPCSTR lpUNCServerName, LPCSTR lpFileName)
 {
 	return NULL;
 }
