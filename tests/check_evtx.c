@@ -1,3 +1,5 @@
+#include <stdio.h>
+
 #include "check_main.h"
 
 #include "evtx.h"
@@ -79,6 +81,21 @@ START_TEST(test_bad_evtx_record_length)
 }
 END_TEST
 
+START_TEST(test_find_chunk_0)
+{
+	const char *addr = chunk_addr(good_evtx_file, 0);
+	printf("header size:\t%d\n", sizeof(EvtxHeader));
+	printf("`good_evtx_file` addr:\t%p\t`addr`:\t%p\n", good_evtx_file, addr);
+	char test_magic[sizeof(evtx_chunk_magic)];
+	memcpy(test_magic, addr, sizeof(test_magic));
+
+	uint64_t mag_int = *(uint64_t*)evtx_chunk_magic;
+	uint64_t test_int = *(uint64_t*)test_magic;
+	ck_assert_int_eq(mag_int, test_int);
+	//ck_assert_bin_eq(evtx_chunk_magic, test_magic, sizeof(evtx_chunk_magic));
+}
+END_TEST
+
 
 /*	utilities	*/
 
@@ -119,6 +136,10 @@ Suite *evtx_suite(void)
 	tcase_add_test(record, test_bad_evtx_record_magic);
 	tcase_add_test(record, test_bad_evtx_record_length);
 	suite_add_tcase(suite, record);
+
+	TCase *find_chunk = tcase_create("Find_File");
+	tcase_add_test(find_chunk, test_find_chunk_0);
+	suite_add_tcase(suite, find_chunk);
 
 	return suite;
 }

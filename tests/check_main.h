@@ -6,6 +6,8 @@
 
 #include <check.h>
 
+#include "check_assertions.h"
+
 
 Suite *evtx_suite(void);
 Suite *evt_suite(void);

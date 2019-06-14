@@ -86,7 +86,8 @@ int build_evtx_header(const char *log, PEvtxHeader header);
 int build_evtx_chunk(const char *addr, PEvtxChunk chunk);
 // if ((PEvtxRecord)addr)->Length is <= size, build record. Return ->Length
 int build_evtx_record(const char *addr, PEvtxRecord record, size_t size);
-//const char *chunk_addr(const char *log, size_t index);
+
+const char *chunk_addr(const char *log, size_t index);
 //const char *record_addr(PEvtxChunk chunk, size_t index);
 
 #endif // EVTX_H_INCLUDED
