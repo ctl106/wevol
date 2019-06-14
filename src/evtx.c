@@ -11,10 +11,6 @@
 #endif // DEBUG
 
 
-#define HEADER_SIZE	4096	// bytes size of header, though not all is used
-#define CHUNK_SIZE	65536	// bytes size of chunks, though not all is used
-// well, the chunk header is 512
-
 const char evtx_header_magic[8] =	"ElfFile\0";
 const char evtx_chunk_magic[8] = 	"ElfChnk\0";
 const char evtx_record_magic[4] =	"**\0\0";
@@ -41,7 +37,7 @@ static int is_record_valid(PEvtxRecord record)
 // public
 int build_evtx_header(const char *log, PEvtxHeader header)
 {
-	memcpy(header, log, sizeof(EvtxHeader));
+	memcpy(header, log, EVTX_HEADER_SIZE);
 	if(memcmp(header->magic, evtx_header_magic, sizeof(header->magic)))
 		return EXIT_FAILURE;
 	else
@@ -50,9 +46,7 @@ int build_evtx_header(const char *log, PEvtxHeader header)
 
 int build_evtx_chunk(const char *addr, PEvtxChunk chunk)
 {
-	size_t c_size = (uintptr_t)&(chunk->records) - (uintptr_t)chunk;
-	DBG("Chunk size = &(chunk->records) - chunk; need to verify\n");
-	memcpy(chunk, addr, c_size);//sizeof(EvtxChunk));
+	memcpy(chunk, addr, EVTX_CHUNK_HEADER_SIZE);//sizeof(EvtxChunk));
 	if(memcmp(chunk->magic, evtx_chunk_magic, sizeof(chunk->magic)))
 		return EXIT_FAILURE;
 	else
@@ -72,7 +66,7 @@ int build_evtx_record(const char *addr, PEvtxRecord record, size_t size)
 
 const char *chunk_addr(const char *log, size_t index)
 {
-	return log + sizeof(EvtxHeader) + index*sizeof(EvtxChunk);
+	return log + EVTX_CHUNK_OFFSET + index*EVTX_CHUNK_SIZE;
 }
 
 const char *record_addr(PEvtxChunk chunk, size_t index);

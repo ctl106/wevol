@@ -22,6 +22,11 @@ const char evtx_chunk_magic[8];
 const char evtx_record_magic[4];
 
 
+#define EVTX_HEADER_SIZE	1024	// bytes size of header
+#define EVTX_CHUNK_OFFSET 4096	// the offset of the first chunk
+#define EVTX_CHUNK_HEADER_SIZE	512
+#define EVTX_CHUNK_SIZE	65536	// bytes size of chunks, though not all is used
+
 /*
 time datatype used by Windows...
 needed for a struct definition, so not externally visible, and since value

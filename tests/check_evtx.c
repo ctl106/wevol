@@ -24,7 +24,7 @@ END_TEST
 
 START_TEST(test_bad_evtx_header)
 {
-	char header_data[sizeof(EvtxHeader)] = {0};
+	char header_data[EVTX_HEADER_SIZE] = {0};
 	EvtxHeader test_header;
 	ck_assert_int_eq(
 		build_evtx_header(header_data, &test_header),
@@ -45,7 +45,7 @@ END_TEST
 
 START_TEST(test_bad_evtx_chunk)
 {
-	char chunk_data[sizeof(EvtxChunk)] = {0};
+	char chunk_data[EVTX_CHUNK_SIZE] = {0};
 	EvtxChunk test_chunk;
 	ck_assert_int_eq(
 		build_evtx_chunk(chunk_data, &test_chunk),
@@ -84,7 +84,7 @@ END_TEST
 START_TEST(test_find_chunk_0)
 {
 	const char *addr = chunk_addr(good_evtx_file, 0);
-	printf("header size:\t%d\n", sizeof(EvtxHeader));
+	printf("header size:\t%d\n", EVTX_HEADER_SIZE);
 	printf("`good_evtx_file` addr:\t%p\t`addr`:\t%p\n", good_evtx_file, addr);
 	char test_magic[sizeof(evtx_chunk_magic)];
 	memcpy(test_magic, addr, sizeof(test_magic));
