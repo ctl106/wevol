@@ -14,43 +14,47 @@ int test_build_evtx_record(const char *addr);
 
 START_TEST(test_good_evtx_header)
 {
-	EvtxHeader test_header;
+	EvtxHeader *test_header = malloc(EVTX_HEADER_SIZE);
 	ck_assert_int_eq(
-		build_evtx_header(good_evtx_header, &test_header),
+		build_evtx_header(good_evtx_header, test_header),
 		EXIT_SUCCESS
 	);
+	free(test_header);
 }
 END_TEST
 
 START_TEST(test_bad_evtx_header)
 {
 	char header_data[EVTX_HEADER_SIZE] = {0};
-	EvtxHeader test_header;
+	EvtxHeader *test_header = malloc(EVTX_HEADER_SIZE);
 	ck_assert_int_eq(
-		build_evtx_header(header_data, &test_header),
+		build_evtx_header(header_data, test_header),
 		EXIT_FAILURE
 	);
+	free(test_header);
 }
 END_TEST
 
 START_TEST(test_good_evtx_chunk)
 {
-	EvtxChunk test_chunk;
+	EvtxChunk *test_chunk = malloc(EVTX_CHUNK_SIZE);
 	ck_assert_int_eq(
-		build_evtx_chunk(good_evtx_chunk, &test_chunk),
+		build_evtx_chunk(good_evtx_chunk, test_chunk),
 		EXIT_SUCCESS
 	);
+	free(test_chunk);
 }
 END_TEST
 
 START_TEST(test_bad_evtx_chunk)
 {
 	char chunk_data[EVTX_CHUNK_SIZE] = {0};
-	EvtxChunk test_chunk;
+	EvtxChunk *test_chunk = malloc(EVTX_CHUNK_SIZE);
 	ck_assert_int_eq(
-		build_evtx_chunk(chunk_data, &test_chunk),
+		build_evtx_chunk(chunk_data, test_chunk),
 		EXIT_FAILURE
 	);
+	free(test_chunk);
 }
 END_TEST
 
@@ -84,14 +88,19 @@ END_TEST
 START_TEST(test_find_chunk_0)
 {
 	const char *addr = chunk_addr(good_evtx_file, 0);
-	printf("header size:\t%d\n", EVTX_HEADER_SIZE);
-	printf("`good_evtx_file` addr:\t%p\t`addr`:\t%p\n", good_evtx_file, addr);
-	char test_magic[sizeof(evtx_chunk_magic)];
-	memcpy(test_magic, addr, sizeof(test_magic));
+	char test_magic[sizeof(evtx_chunk_magic)] = {0};
+	memcpy(test_magic, addr, sizeof(evtx_chunk_magic));
+	ck_assert_str_eq(test_magic, evtx_chunk_magic);
+	//ck_assert_bin_eq(evtx_chunk_magic, test_magic, sizeof(evtx_chunk_magic));
+}
+END_TEST
 
-	uint64_t mag_int = *(uint64_t*)evtx_chunk_magic;
-	uint64_t test_int = *(uint64_t*)test_magic;
-	ck_assert_int_eq(mag_int, test_int);
+START_TEST(test_find_chunk_1)
+{
+	const char *addr = chunk_addr(good_evtx_file, 1);
+	char test_magic[sizeof(evtx_chunk_magic)] = {0};
+	memcpy(test_magic, addr, sizeof(evtx_chunk_magic));
+	ck_assert_str_eq(test_magic, evtx_chunk_magic);
 	//ck_assert_bin_eq(evtx_chunk_magic, test_magic, sizeof(evtx_chunk_magic));
 }
 END_TEST
@@ -108,6 +117,7 @@ int test_build_evtx_record(const char *addr)
 	test_record = malloc(size);
 
 	size = build_evtx_record(addr, test_record, size);
+	free(test_record);
 	if(size>=0)
 		return EXIT_SUCCESS;
 	else
@@ -137,9 +147,13 @@ Suite *evtx_suite(void)
 	tcase_add_test(record, test_bad_evtx_record_length);
 	suite_add_tcase(suite, record);
 
-	TCase *find_chunk = tcase_create("Find_File");
+	TCase *find_chunk = tcase_create("Find_Chunk_In_File");
 	tcase_add_test(find_chunk, test_find_chunk_0);
+	tcase_add_test(find_chunk, test_find_chunk_1);
 	suite_add_tcase(suite, find_chunk);
+
+	TCase *find_record = tcase_create(Find_Record_In_Chunk");
+	suite_add_tcase(suite, find_record);
 
 	return suite;
 }
